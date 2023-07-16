@@ -1,0 +1,191 @@
+<!-- left side -->
+<div class="col-4 border-thin p-0 py-3">
+  <div class="head text-right border-bottom-thin px-2">
+    <span class="label">Pallet Planning </span>
+    <label class="switch">
+      <input type="checkbox" [formControl]="palletPlanningControl" />
+      <span class="slider round"></span>
+    </label>
+  </div>
+  <div class="content p-4">
+    <div [ngClass]="{ overlay: !palletPlanningControl.value }"></div>
+    <!-- pallet type selection -->
+    <div class="row">
+      <div class="col-12">
+        <p>Pallet Info</p>
+      </div>
+      <div class="col-6" *ngFor="let pallet of palletMappings | keyvalue">
+        <app-pallet-type
+          [sellectedPallet]="palletType"
+          [palletType]="pallet.key"
+          (palletTypeChangeEvent)="selectPalletType($event)"
+        ></app-pallet-type>
+      </div>
+    </div>
+
+    <!-- pallet properties -->
+    <div class="row mt-5">
+      <div class="col-12">
+        <p>Object Dimension</p>
+      </div>
+      <div class="col-8 mt-4">
+        <div
+          app-range-inputs
+          inputId="length"
+          label="Length mm"
+          [control]="objectLengthControl"
+          [max]="objectMaxHeight"
+          [step]="1"
+        ></div>
+      </div>
+      <div class="col-4 mt-4">
+        <input
+          type="number"
+          class="form-control mt-3"
+          [ngModel]="objectLengthControl.value"
+          [disabled]="true"
+        />
+      </div>
+      <!-- object dimension -->
+      <div class="col-8 mt-5">
+        <div
+          app-range-inputs
+          inputId="width"
+          label="Width mm"
+          [control]="objectWidthControl"
+          [max]="objectMaxWidth"
+          [step]="1"
+        ></div>
+      </div>
+      <div class="col-4 mt-5">
+        <input
+          type="number"
+          class="form-control mt-3"
+          [ngModel]="objectWidthControl.value"
+          [disabled]="true"
+        />
+      </div>
+      <!-- number of objects -->
+      <div class="col-8 mt-5">
+        <label for="number-of-objects" class="pt-1">Number of Objects </label>
+      </div>
+      <div class="col-4 mt-5">
+        <input
+          type="number"
+          class="form-control"
+          [formControl]="numberOfObjectsControl"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 text-right">
+      <button
+        type="button"
+        class="btn btn-outline-dark m-3"
+        (click)="savePalletSettings()"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</div>
+<!-- right side -->
+<div class="col-8 border-thin p-0 py-3">
+  <div class="head border-bottom-thin px-2">
+    <h5 class="m-0">{{ palletType }}</h5>
+    <p>
+      {{ getPalletDimensionMapping(palletType).length }} X
+      {{ getPalletDimensionMapping(palletType).width }} (L X W)
+    </p>
+  </div>
+  <div class="content text-center" #palletArea>
+    <div [ngClass]="{ overlay: palletPlanningControl.value }"></div>
+    <div class="row mx-0">
+      <div class="col my-3 object-buttons">
+        <img
+          src="../assets/images/pallet-horizontal.png"
+          alt=""
+          class="object-button1"
+          [ngClass]="{ selected: objectOrientation === 'HORIZONTAL' }"
+          (click)="objectOrientation = 'HORIZONTAL'"
+        />
+        <img
+          src="../assets/images/pallet-vertical.png"
+          alt=""
+          class="object-button2"
+          [ngClass]="{ selected: objectOrientation === 'VERTICAL' }"
+          (click)="objectOrientation = 'VERTICAL'"
+        />
+        <button
+          type="button"
+          class="btn btn-outline-dark add-object-button"
+          (click)="addObject()"
+        >
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </div>
+    </div>
+    <div>
+      <div
+        #palletBox
+        class="main-pallet-box m-auto"
+        [style.width.px]="palletWidth"
+        [style.height.px]="palletHeight"
+      >
+        <div
+          *ngFor="let object of objectsInPallet; let i = index"
+          class="object"
+          [id]="'object-' + i"
+          draggable="true"
+          [style.width.px]="
+            object.orientation === 'HORIZONTAL'
+              ? objectWidthControl.value
+              : objectLengthControl.value
+          "
+          [style.height.px]="
+            object.orientation === 'HORIZONTAL'
+              ? objectLengthControl.value
+              : objectWidthControl.value
+          "
+          (click)="selectObjectForModification(object.orientation, i)"
+          [ngClass]="selectedObject?.index === i ? 'selected' : ''"
+        >
+          {{ i }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 mt-3 d-flex justify-content-between">
+    <!-- 2 buttons to the left, one to the right -->
+    <div class="text-left">
+      <button
+        type="button"
+        class="btn btn-danger ml-2"
+        (click)="removeObject()"
+        *ngIf="selectedObject"
+      >
+        <i class="fa-regular fa-trash-can"></i>
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary ml-2"
+        (click)="copyObject()"
+        *ngIf="selectedObject"
+      >
+        <i class="fa-regular fa-copy"></i>
+      </button>
+    </div>
+    <div class="text-right">
+      <button
+        type="button"
+        class="btn btn-outline-dark ml-2"
+        (click)="savePallet()"
+        [disabled]="objectsInPallet.length !== numberOfObjectsControl.value"
+      >
+        save
+      </button>
+    </div>
+  </div>
+</div>

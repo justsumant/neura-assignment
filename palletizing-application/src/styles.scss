@@ -1,0 +1,170 @@
+/* You can add global styles to this file, and also import other style files */
+/* The switch - the box around the slider */
+body {
+  background-color: #f2f2f2;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  color: #000000;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 5px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #000000;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #000000;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(20px);
+  -ms-transform: translateX(20px);
+  transform: translateX(20px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.overlay {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 90%;
+  top: 10%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.border-thin {
+  border: 1px solid black;
+}
+
+.border-bottom-thin {
+  border-bottom: 1px solid black;
+}
+.pallet-image {
+  height: 400px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.tray-image {
+  height: 350px;
+  padding-top: 75px;
+  padding-bottom: 75px;
+}
+
+.head {
+  height: 50px;
+}
+.pallet {
+  height: 200px;
+  border: 1px solid black;
+  margin-top: 10px;
+  text-align: center;
+  padding-top: 50%;
+}
+
+.object-buttons {
+  max-height: 100px;
+}
+
+.object-button1 {
+  max-height: 60%;
+  cursor: pointer;
+}
+
+.object-button2 {
+  max-height: 100%;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.add-object-button {
+  margin-left: 20px;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}
+
+.main-pallet-box {
+  width: 100%;
+  height: 370px;
+  border: 1px solid black;
+  text-align: left;
+}
+
+.content {
+  max-height: 502px;
+  overflow-y: scroll;
+}
+
+.selected {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.object-button1.selected,
+.object-button2.selected {
+  box-shadow: 0px 0px 6px 2px black;
+}
+
+.object {
+  border: 1px solid black;
+  padding: 20px;
+  display: inline-block;
+  text-align: center;
+  cursor: move;
+}
+
+.object.selected {
+  box-shadow: inset 0px 0px 6px 0px black;
+  background-color: unset;
+  color: #000000;
+}

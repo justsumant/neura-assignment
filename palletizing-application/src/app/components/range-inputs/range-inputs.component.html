@@ -1,0 +1,12 @@
+<div class="form-group">
+  <label for="length">{{ label }}</label>
+  <input
+    type="range"
+    class="form-control-range"
+    id="length"
+    [formControl]="inputControl"
+    [min]="min"
+    [step]="step"
+    [max]="max"
+  />
+</div>
