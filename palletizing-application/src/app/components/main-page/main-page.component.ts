@@ -6,7 +6,6 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import {
   PALLET_WIDTH_FACTOR,
   palletMapping,
@@ -18,6 +17,7 @@ import {
   PalletType,
   States,
 } from 'src/app/models/app.model';
+import { FormControl } from '@angular/forms';
 import { calculateAspectRatio } from 'src/app/utils/app.util';
 
 @Component({
@@ -26,6 +26,22 @@ import { calculateAspectRatio } from 'src/app/utils/app.util';
   styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent implements AfterViewInit {
+  palletWidth = 0;
+  palletHeight = 0;
+  objectMaxHeight = 0;
+  objectMaxWidth = 0;
+  palletMappings = palletMapping;
+  palletType: PalletType = 'EURO 1';
+  boundryDimensions: DOMRect | null = null;
+  objectOrientation: Orientation = 'HORIZONTAL';
+  objectsInPallet: { orientation: Orientation }[] = [];
+  objectLengthControl = new FormControl<number>(1);
+  objectWidthControl = new FormControl<number>(1);
+  numberOfObjectsControl = new FormControl<number>(1);
+  palletPlanningControl = new FormControl<boolean>(true);
+  aspectRatio!: { aspectWidth: number; aspectHeight: number };
+  selectedObject: { object: Orientation; index: number } | null = null;
+
   @Output() gotoNextPageEvent = new EventEmitter<{
     state: States;
     objects: IObject[];
@@ -33,22 +49,6 @@ export class MainPageComponent implements AfterViewInit {
     numberOfObjects: number;
     dimension: IObjectDimension;
   }>();
-  palletPlanningControl = new FormControl<boolean>(true);
-  objectLengthControl = new FormControl<number>(1);
-  objectWidthControl = new FormControl<number>(1);
-  numberOfObjectsControl = new FormControl<number>(1);
-  palletType: PalletType = 'EURO 1';
-  objectOrientation: 'HORIZONTAL' | 'VERTICAL' = 'HORIZONTAL';
-  palletWidth = 0;
-  palletHeight = 0;
-  objectMaxHeight = 0;
-  objectMaxWidth = 0;
-  objectsInPallet: { orientation: Orientation }[] = [];
-  selectedObject: { object: Orientation; index: number } | null = null;
-  palletMappings = palletMapping;
-  boundryDimensions: DOMRect | null = null;
-  aspectRatio!: { aspectWidth: number; aspectHeight: number };
-
   @ViewChild('palletArea') palletArea!: ElementRef<HTMLDivElement>;
   @ViewChild('palletBox') palletBox!: ElementRef<HTMLDivElement>;
 
@@ -72,10 +72,13 @@ export class MainPageComponent implements AfterViewInit {
   copyObject() {
     if (this.selectedObject && this.isWithinBoundary()) {
       this.objectsInPallet.push({ orientation: this.selectedObject.object });
-      // this.reAssignDragableEventListeners();
     }
   }
 
+  /**
+   * The function "addObject" adds an object to the "objectsInPallet" array if the object's width and
+   * length are provided and it is within the specified boundary.
+   */
   addObject() {
     if (
       this.objectWidthControl.value &&
@@ -85,29 +88,29 @@ export class MainPageComponent implements AfterViewInit {
       this.objectsInPallet.push({
         orientation: this.objectOrientation,
       });
-      this.reAssignDragableEventListeners();
     }
   }
 
-  reAssignDragableEventListeners() {
-    setTimeout(() => {
-      let items = document.querySelectorAll('.object');
+  /** Below code was a try to implement drag and drop functionality  */
+  // reAssignDragableEventListeners() {
+  //   setTimeout(() => {
+  //     let items = document.querySelectorAll('.object');
 
-      items.forEach((item) => {
-        item.addEventListener('dragstart', this.handleDragStart);
-        item.addEventListener('dragend', this.handleDragEnd);
-      });
-    }, 500);
-  }
+  //     items.forEach((item) => {
+  //       item.addEventListener('dragstart', this.handleDragStart);
+  //       item.addEventListener('dragend', this.handleDragEnd);
+  //     });
+  //   }, 500);
+  // }
 
-  handleDragStart(e: any) {
-    // const boundry = this.palletBox.nativeElement.getBoundingClientRect();
-    console.log(this.boundryDimensions, e);
-  }
+  // handleDragStart(e: any) {
+  //   // const boundry = this.palletBox.nativeElement.getBoundingClientRect();
+  //   console.log(this.boundryDimensions, e);
+  // }
 
-  handleDragEnd(e: any) {
-    // console.log(this.palletBox.nativeElement.getBoundingClientRect(), e);
-  }
+  // handleDragEnd(e: any) {
+  //   // console.log(this.palletBox.nativeElement.getBoundingClientRect(), e);
+  // }
 
   getPalletDimensionMapping(pallet: PalletType) {
     return palletMapping[pallet];
@@ -177,7 +180,6 @@ export class MainPageComponent implements AfterViewInit {
    * type, number of objects, and pallet dimensions if all required values are provided.
    */
   savePallet() {
-    // this.calculateObjectPositions();
     if (
       this.numberOfObjectsControl.value &&
       this.objectLengthControl.value &&
@@ -207,13 +209,14 @@ export class MainPageComponent implements AfterViewInit {
         .getElementById('object-' + index)
         ?.getBoundingClientRect();
 
-      console.log(objectPositions, this.boundryDimensions);
-
       if (objectPositions && palletLength && palletWidth) {
         const xDiff = objectPositions.x - this.boundryDimensions!.x;
         const yDiff = objectPositions.y - this.boundryDimensions!.y;
         const aspectWidth = this.aspectRatio.aspectWidth;
         const aspectHeight = this.aspectRatio.aspectHeight;
+        // Below commented code is for another approach to calculate
+        // the pallet size, as mentioned in the requirement
+
         // const actualPalletSize = this.getPalletDimensionMapping(this.palletType);
 
         const x =
@@ -256,8 +259,9 @@ export class MainPageComponent implements AfterViewInit {
    * @returns a boolean value. If the condition in the if statement is true, it will return false.
    * Otherwise, it will return true.
    */
-
   private isWithinBoundary() {
+    this.boundryDimensions =
+      this.palletBox.nativeElement.getBoundingClientRect();
     if (
       this.objectsInPallet.length > 0 &&
       this.objectLengthControl.value &&
@@ -266,8 +270,7 @@ export class MainPageComponent implements AfterViewInit {
       const lastObjectDimensions = document
         .getElementById('object-' + (this.objectsInPallet.length - 1))
         ?.getBoundingClientRect();
-      this.boundryDimensions =
-        this.palletBox.nativeElement.getBoundingClientRect();
+
       if (lastObjectDimensions) {
         const objectRight = lastObjectDimensions.right;
         const objectBottom = lastObjectDimensions.bottom;

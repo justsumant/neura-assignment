@@ -32,8 +32,6 @@
 <script>
 export default {
   name: "InitailPage",
-  props: {},
-  methods: {},
 };
 </script>
 

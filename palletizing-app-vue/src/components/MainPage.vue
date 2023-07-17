@@ -34,14 +34,6 @@
             <p>Object Dimension</p>
           </div>
           <div class="col-8 mt-4">
-            <!-- <div
-              app-range-inputs
-              inputId="length"
-              label="Length mm"
-              [control]="objectLengthControl"
-              [max]="objectMaxHeight"
-              [step]="1"
-            ></div> -->
             <div class="form-group">
               <label for="length">Length mm</label>
               <input
@@ -63,14 +55,6 @@
             />
           </div>
           <div class="col-8 mt-5">
-            <!-- <div
-              app-range-inputs
-              inputId="width"
-              label="Width mm"
-              [control]="objectWidthControl"
-              [max]="objectMaxWidth"
-              [step]="1"
-            ></div> -->
             <div class="form-group">
               <label for="width">Width mm</label>
               <input
@@ -264,10 +248,6 @@ export default {
   },
   props: {},
   methods: {
-    goToNextPage() {
-      this.$emit({ state: "FINISH" });
-    },
-
     getPalletDimensionMapping(pallet) {
       return this.palletMappings[pallet];
     },
@@ -289,6 +269,9 @@ export default {
       }
     },
     isWithinBoundary() {
+      this.boundryDimensions = document
+        .getElementById("palletBox")
+        .getBoundingClientRect();
       if (
         this.objectsInPallet.length > 0 &&
         this.objectLengthControl &&
@@ -297,9 +280,6 @@ export default {
         const lastObjectDimensions = document
           .getElementById("object-" + (this.objectsInPallet.length - 1))
           ?.getBoundingClientRect();
-        this.boundryDimensions = document
-          .getElementById("palletBox")
-          .getBoundingClientRect();
 
         if (lastObjectDimensions) {
           const objectRight = lastObjectDimensions.right;
@@ -387,7 +367,6 @@ export default {
         const objectPositions = document
           .getElementById("object-" + index)
           ?.getBoundingClientRect();
-
         if (objectPositions && palletLength && palletWidth) {
           const xDiff = objectPositions.x - this.boundryDimensions.x;
           const yDiff = objectPositions.y - this.boundryDimensions.y;
@@ -399,17 +378,11 @@ export default {
             object.orientation === "VERTICAL"
               ? xDiff + (palletLength / 2) * aspectHeight
               : xDiff + (palletWidth / 2) * aspectWidth;
-          // object.orientation === 'VERTICAL'
-          //   ? ((xDiff + palletLength / 2) / palletLength) * pallet.length
-          //   : ((xDiff + palletWidth / 2) / palletWidth) * pallet.width;
 
           const y =
             object.orientation === "VERTICAL"
               ? yDiff + (palletWidth / 2) * aspectWidth
               : yDiff + (palletLength / 2) * aspectHeight;
-          // object.orientation === 'VERTICAL'
-          //   ? ((yDiff + palletWidth / 2) / palletWidth) * pallet.width
-          //   : ((yDiff + palletLength / 2) / palletLength) * pallet.length;
 
           objects.push({
             x,

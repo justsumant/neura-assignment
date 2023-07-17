@@ -45,9 +45,6 @@ export default {
   props: {
     payload: Object,
   },
-  mounted() {
-    console.log(this.payload);
-  },
 };
 </script>
 

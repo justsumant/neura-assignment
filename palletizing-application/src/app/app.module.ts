@@ -10,7 +10,14 @@ import { MainPageComponent } from './components/main-page/main-page.component';
 import { FinishPageComponent } from './components/finish-page/finish-page.component';
 
 @NgModule({
-  declarations: [AppComponent, RangeInputsComponent, InitialPageComponent, PalletTypeComponent, MainPageComponent, FinishPageComponent],
+  declarations: [
+    AppComponent,
+    RangeInputsComponent,
+    InitialPageComponent,
+    PalletTypeComponent,
+    MainPageComponent,
+    FinishPageComponent,
+  ],
   imports: [FormsModule, BrowserModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
