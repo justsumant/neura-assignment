@@ -92,11 +92,8 @@ export class MainPageComponent implements AfterViewInit {
   reAssignDragableEventListeners() {
     setTimeout(() => {
       let items = document.querySelectorAll('.object');
-      console.log(items);
 
       items.forEach((item) => {
-        console.log(item);
-
         item.addEventListener('dragstart', this.handleDragStart);
         item.addEventListener('dragend', this.handleDragEnd);
       });
@@ -130,7 +127,6 @@ export class MainPageComponent implements AfterViewInit {
     this.palletHeight =
       (this.palletWidth / this.aspectRatio.aspectWidth) *
       this.aspectRatio.aspectHeight;
-    console.log(this.palletWidth, this.palletHeight);
   }
 
   /**
@@ -211,31 +207,38 @@ export class MainPageComponent implements AfterViewInit {
         .getElementById('object-' + index)
         ?.getBoundingClientRect();
 
+      console.log(objectPositions, this.boundryDimensions);
+
       if (objectPositions && palletLength && palletWidth) {
         const xDiff = objectPositions.x - this.boundryDimensions!.x;
         const yDiff = objectPositions.y - this.boundryDimensions!.y;
-        console.log(xDiff, yDiff, objectPositions, this.boundryDimensions);
-
         const aspectWidth = this.aspectRatio.aspectWidth;
         const aspectHeight = this.aspectRatio.aspectHeight;
-        // const pallet = this.getPalletDimensionMapping(this.palletType);
-        console.log(aspectWidth, aspectHeight);
+        // const actualPalletSize = this.getPalletDimensionMapping(this.palletType);
 
         const x =
           object.orientation === 'VERTICAL'
             ? xDiff + (palletLength / 2) * aspectHeight
             : xDiff + (palletWidth / 2) * aspectWidth;
         // object.orientation === 'VERTICAL'
-        //   ? ((xDiff + palletLength / 2) / palletLength) * pallet.length
-        //   : ((xDiff + palletWidth / 2) / palletWidth) * pallet.width;
+        // ? ((xDiff + this.objectLengthControl.value! / 2) /
+        //     this.palletWidth) *
+        //   actualPalletSize.width
+        // : ((xDiff + this.objectWidthControl.value! / 2) /
+        //     this.palletWidth) *
+        //   actualPalletSize.width;
 
         const y =
           object.orientation === 'VERTICAL'
             ? yDiff + (palletWidth / 2) * aspectWidth
             : yDiff + (palletLength / 2) * aspectHeight;
         // object.orientation === 'VERTICAL'
-        //   ? ((yDiff + palletWidth / 2) / palletWidth) * pallet.width
-        //   : ((yDiff + palletLength / 2) / palletLength) * pallet.length;
+        // ? ((yDiff + this.objectWidthControl.value! / 2) /
+        //     this.palletWidth) *
+        //   actualPalletSize.width
+        // : ((yDiff + this.objectLengthControl.value! / 2) /
+        //     this.palletHeight) *
+        //   actualPalletSize.length;
 
         objects.push({
           x,
@@ -265,7 +268,6 @@ export class MainPageComponent implements AfterViewInit {
         ?.getBoundingClientRect();
       this.boundryDimensions =
         this.palletBox.nativeElement.getBoundingClientRect();
-
       if (lastObjectDimensions) {
         const objectRight = lastObjectDimensions.right;
         const objectBottom = lastObjectDimensions.bottom;
