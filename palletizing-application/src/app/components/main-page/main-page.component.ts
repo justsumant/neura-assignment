@@ -291,8 +291,6 @@ export class MainPageComponent implements AfterViewInit {
       this.objectsInPallet = this.objectsInPallet.filter(
         (object) => object.id !== this.selectedObject?.id
       );
-      console.log(this.objectsInPallet);
-
       this.selectedObject = null;
     }
   }
@@ -335,8 +333,6 @@ export class MainPageComponent implements AfterViewInit {
    * the conditions are not met, it will display an alert message and return `false`.
    */
   private isWithinBoundary() {
-    console.log(this.objectsInPallet);
-
     this.boundryDimensions = document
       .getElementById('palletBox')!
       .getBoundingClientRect();
