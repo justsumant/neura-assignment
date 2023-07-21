@@ -15,7 +15,9 @@ export interface IObjectDimension {
 }
 
 export interface IObject {
+  id: number;
+  itemNumber: number;
   orientation?: Orientation;
-  x: number;
-  y: number;
+  x?: number;
+  y?: number;
 }

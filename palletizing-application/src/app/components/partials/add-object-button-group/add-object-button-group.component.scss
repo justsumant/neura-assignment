@@ -1,0 +1,26 @@
+.object-buttons {
+  max-height: 100px;
+}
+
+.object-button1 {
+  max-height: 60%;
+  cursor: pointer;
+}
+
+.object-button2 {
+  max-height: 100%;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.add-object-button {
+  margin-left: 20px;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}
+
+.object-button1.selected,
+.object-button2.selected {
+  box-shadow: 0px 0px 6px 2px black;
+}

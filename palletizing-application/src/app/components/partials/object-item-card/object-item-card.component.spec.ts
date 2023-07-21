@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FinishPageComponent } from './finish-page.component';
+import { ObjectItemCardComponent } from './object-item-card.component';
 
-describe('FinishPageComponent', () => {
-  let component: FinishPageComponent;
-  let fixture: ComponentFixture<FinishPageComponent>;
+describe('ObjectItemCardComponent', () => {
+  let component: ObjectItemCardComponent;
+  let fixture: ComponentFixture<ObjectItemCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FinishPageComponent ]
+      declarations: [ ObjectItemCardComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FinishPageComponent);
+    fixture = TestBed.createComponent(ObjectItemCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

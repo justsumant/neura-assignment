@@ -19,5 +19,12 @@ export const palletMapping: { [key in PalletType]: IObjectDimension } = {
   },
 };
 
-// bringing pallet width to 80% of available area
-export const PALLET_WIDTH_FACTOR = 0.8;
+// maintaining a 200px of height difference between settings
+// panel height and pallet container height is most suitable for the UI
+export const SETTINGS_PANEL_HEIGHT = 750;
+export const PALLET_CONTAINER_HEIGHT = 550;
+
+//  string constants
+export const OBJECT_IS_BIGGER_THAN_PALLET = 'Object is bigger than pallet';
+export const OBJECT_ID_PREFIX = 'object-';
+export const PALLET_IS_FULL = 'Pallet is full';

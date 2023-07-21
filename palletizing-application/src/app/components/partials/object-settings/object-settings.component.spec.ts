@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InitialPageComponent } from './initial-page.component';
+import { ObjectSettingsComponent } from './object-settings.component';
 
-describe('InitialPageComponent', () => {
-  let component: InitialPageComponent;
-  let fixture: ComponentFixture<InitialPageComponent>;
+describe('ObjectSettingsComponent', () => {
+  let component: ObjectSettingsComponent;
+  let fixture: ComponentFixture<ObjectSettingsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InitialPageComponent ]
+      declarations: [ ObjectSettingsComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(InitialPageComponent);
+    fixture = TestBed.createComponent(ObjectSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

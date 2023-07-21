@@ -1,0 +1,48 @@
+.object {
+  vertical-align: top;
+  display: inline-block;
+  text-align: center;
+  cursor: move;
+  background: rgb(34, 193, 195);
+  background: linear-gradient(
+    103deg,
+    rgba(34, 193, 195, 1) 0%,
+    rgba(253, 187, 45, 1) 100%
+  );
+  position: relative;
+}
+
+.object.selected {
+  box-shadow: inset 0px 0px 9px 2px black;
+  color: #000000;
+}
+
+.object {
+  img {
+    height: 100%;
+    width: 100%;
+    vertical-align: top;
+  }
+  background-image: url("../../../../assets/images/object.png");
+  background-position: center;
+  background-size: cover;
+  color: white;
+}
+
+//  drag related styles
+/* Add styling for the dragging element */
+.dragging {
+  box-shadow: 0 0 0 2px red;
+}
+
+/* Add styling for the element being dragged over */
+.drag-over {
+  box-shadow: 0 0 0 2px rgb(65, 248, 80);
+  opacity: 0.8;
+}
+
+.item-number {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+}

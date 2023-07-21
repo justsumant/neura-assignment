@@ -1,0 +1,33 @@
+<div
+  *ngFor="let object of objectsInPallet"
+  class="object"
+  [id]="'object-' + object.id"
+  [draggable]="state === 'MAIN'"
+  [style.width.px]="
+    object.orientation === 'HORIZONTAL'
+      ? objectWidthControl.value
+      : objectLengthControl.value
+  "
+  [style.height.px]="
+    object.orientation === 'HORIZONTAL'
+      ? objectLengthControl.value
+      : objectWidthControl.value
+  "
+  (click)="selectObjectEvent.emit(object)"
+  [ngClass]="{
+    selected: selectedObject?.id === object.id
+  }"
+>
+  <div
+    style="
+      height: 100%;
+      vertical-align: middle;
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+    "
+  >
+    {{ object.itemNumber }}
+  </div>
+</div>

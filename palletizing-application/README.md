@@ -46,3 +46,21 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`.
 
 - the object values (x and y) seems to be not properly comming as expected, thorough testing is required,
 - working on drag-drop feature
+
+---
+
+### Update
+
+# in second try
+
+---
+
+1. Completely modified the algorithm for pallet dimensition, which helped me to achieve exact middle point as required. (I was looking for this multiplicationFactor from the begining itself, found in the second try.)
+2. Drag and drop functionality has been added
+3. Updated the Object model to include id and itemNumber for better tracking of object while manipulating, Id will keep every object unique on change of position, while itemNumber is the name of the object. When we copy one object, the itemNumber will be copied while it will get a new Id.
+4. Layout design improved to modern view,
+5. Components broken down in to multiple (re-designing layout in proper way helped) smaller components stored in components/partials,
+6. The last page has selection behaviour. selecting an item will select the object and vise versa.
+7. The pallet screen will now always stay in the visible zone. it calculates the maximum size it can be in to be visible in given area maintaining the height and width ratio with original display size.
+8. The outer container height of the pallet is maintained to be 550px considernig my own device. The value can be adjusted from the constant stored in src/app/constants/app.constant.ts
+9. Added calculated values at places for better understanding of adjusted numbers. eg- below input field.

@@ -1,0 +1,25 @@
+<div class="col text-center my-3 object-buttons">
+  <img
+    src="../assets/images/pallet-horizontal.png"
+    alt=""
+    class="object-button1"
+    [ngClass]="{
+      selected: objectOrientation === 'HORIZONTAL'
+    }"
+    (click)="changeObjectOrientationEvent.emit('HORIZONTAL')"
+  />
+  <img
+    src="../assets/images/pallet-vertical.png"
+    alt=""
+    class="object-button2"
+    [ngClass]="{ selected: objectOrientation === 'VERTICAL' }"
+    (click)="changeObjectOrientationEvent.emit('VERTICAL')"
+  />
+  <button
+    type="button"
+    class="btn btn-outline-dark add-object-button"
+    (click)="addObjectEvent.emit()"
+  >
+    <i class="fa-solid fa-plus"></i>
+  </button>
+</div>
