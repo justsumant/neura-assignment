@@ -1,0 +1,16 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
+      <app-settings-panel
+        (moveActionEvent)="moveEvent($event)"
+        (settingsEvent)="setSettings($event)"
+      ></app-settings-panel>
+    </div>
+    <div class="col-9">
+      <app-ground-one
+        [moveSubject]="moveSubject"
+        [settings]="settings"
+      ></app-ground-one>
+    </div>
+  </div>
+</div>

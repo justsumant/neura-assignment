@@ -1,0 +1,31 @@
+<div class="jewel-report-container p-4">
+  <div class="row mb-2">
+    <div class="col-4">
+      <h4>Collected Jewels</h4>
+    </div>
+    <div class="col-4"></div>
+    <div class="col-4 text-right">
+      <button
+        type="button"
+        class="btn btn-warning"
+        (click)="toggleJewelDetailOnEvent.emit()"
+        style="border-radius: 12px"
+      >
+        <i class="fa-solid fa-arrow-left"></i> Back to the ground
+      </button>
+    </div>
+  </div>
+  <div class="card px-4 py-3" *ngFor="let jewel of collectedJewels">
+    <app-jewel [jewel]="jewel"></app-jewel>
+  </div>
+
+  <div class="card px-4 py-3 dark">
+    <div class="row">
+      <div class="col-10"></div>
+      <div class="col-2">
+        <i class="fa-solid fa-boxes-stacked" style="color: #facc01"></i>
+        {{ totalWeight }}
+      </div>
+    </div>
+  </div>
+</div>

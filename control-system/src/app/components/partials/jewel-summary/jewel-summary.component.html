@@ -1,0 +1,23 @@
+<div class="card px-4 py-3">
+  <div class="row">
+    <div class="col-2">Summary</div>
+    <div class="col-4"></div>
+    <div class="col-2">
+      {{ collectedJewels.length }} <small><i>House</i> </small>
+    </div>
+
+    <div class="col-2">
+      {{ totalWeight }} <i class="fa-solid fa-coins" style="color: #facc01"></i>
+    </div>
+    <div class="col-2 text-right">
+      <button
+        type="button"
+        class="btn btn-success btn-sm"
+        style="border-radius: 12px"
+        (click)="toggleJewelDetailOnEvent.emit()"
+      >
+        Show Detail
+      </button>
+    </div>
+  </div>
+</div>

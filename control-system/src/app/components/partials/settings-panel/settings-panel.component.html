@@ -1,0 +1,130 @@
+<div class="setting-panel p-4">
+  <div class="static-settings-container">
+    <div [ngClass]="{ overlay: disableSettings }"></div>
+    <h5>Static Settings</h5>
+    <div class="row">
+      <div class="col-12 text-right">
+        <div
+          app-radio-group
+          [options]="pixelTypeOptions"
+          label="Pixel Type"
+          [control]="pixelTypeControl"
+          inputId="pixel-type"
+          label="Pixel Type"
+        ></div>
+      </div>
+      <div class="col-6 text-right mt-3">
+        <div class="form-group">
+          <label for="pixel-size">Pixel Size</label>
+          <input
+            type="number"
+            [formControl]="pixelSizeControl"
+            class="form-control form-control-sm"
+            id="pixel-size"
+            [min]="pixelSizeMin"
+            [max]="pixelSizeMax"
+          />
+          <small class="form-text text-muted"
+            >{{ pixelSizeMin }} to {{ pixelSizeMax }}</small
+          >
+        </div>
+      </div>
+      <div class="col-6 text-right mt-3">
+        <div class="form-group">
+          <label for="pixel-size">Jewel Count</label>
+          <input
+            type="number"
+            [formControl]="noOfJewelsControl"
+            class="form-control form-control-sm"
+            id="pixel-size"
+            [min]="noOfJewelsMin"
+            [max]="noOfJewelsMax"
+          />
+          <small class="form-text text-muted">
+            {{ noOfJewelsMin }} to {{ noOfJewelsMax }}
+          </small>
+        </div>
+      </div>
+      <div class="col-12 text-right">
+        <button
+          #applyButton
+          type="button"
+          class="btn btn-info btn-sm"
+          (click)="applySettings()"
+        >
+          Apply
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="dynamic-setting-container">
+    <div class="row mt-3">
+      <div class="col-12 text-center">
+        <button
+          #upButton
+          type="button"
+          class="btn btn-outline-info m-2"
+          (click)="move('UP')"
+        >
+          <i class="fa fa-angle-up" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="col-12 text-center">
+        <button
+          #leftButton
+          type="button"
+          class="btn btn-outline-info m-2"
+          (click)="move('LEFT')"
+        >
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+        </button>
+        <button
+          #grabButton
+          type="button"
+          class="btn btn-outline-info m-2"
+          (click)="move('GRAB')"
+        >
+          <i class="fa-regular fa-hand-back-fist"></i>
+        </button>
+        <button
+          #rightButton
+          type="button"
+          class="btn btn-outline-info m-2"
+          (click)="move('RIGHT')"
+        >
+          <i class="fa fa-angle-right" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="col-12 text-center">
+        <button
+          #downButton
+          type="button"
+          class="btn btn-outline-info m-2"
+          (click)="move('DOWN')"
+        >
+          <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="text-center mt-5">
+    <small>
+      <i>
+        pss! You can use the arrow keys to move the Bot and the enter key to
+        collect</i
+      >
+    </small>
+  </div>
+  <div class="row mt-3">
+    <div class="col-12">
+      <button
+        type="button"
+        class="btn btn-danger btn-lg btn-block"
+        [disabled]="!disableSettings"
+        (click)="resetSettings()"
+      >
+        Reset
+      </button>
+    </div>
+  </div>
+</div>

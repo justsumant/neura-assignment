@@ -1,0 +1,16 @@
+<label> {{ label }}</label>
+<br />
+<div class="form-check form-check-inline" *ngFor="let option of options">
+  <label class="form-check-label" [for]="option['id']">{{
+    option["label"]
+  }}</label
+  >&nbsp;&nbsp;
+  <input
+    class="form-check-input"
+    type="radio"
+    name="radio-group"
+    [id]="option['id']"
+    [value]="option['value']"
+    [formControl]="inputControl"
+  />
+</div>

@@ -1,0 +1,59 @@
+<div class="row" *ngIf="!isJewelDetailOn">
+  <div class="col-12">
+    <div class="ground-container p-4">
+      <h4>Ground</h4>
+      <div
+        class="ground"
+        [ngStyle]="{ 'min-height': groundHeight + 'px' }"
+        #ground
+      >
+        <ng-container *ngIf="isGroundReady">
+          <ng-container *ngFor="let pixel of pixels">
+            <div
+              class="pixel"
+              [ngStyle]="{
+                height: pixelSize + 'px',
+                width: pixelSize + 'px',
+                'font-size': pixelSize / 2 + 'px'
+              }"
+              [ngClass]="{
+                selected: pixel.isSelected,
+                'has-jewel': pixel.hasJewel,
+                'had-jewel': pixel.hadJewel,
+                round: pixelType === 'round',
+                square: pixelType === 'square'
+              }"
+            >
+              <i class="fa-solid fa-robot" *ngIf="pixel.isSelected"></i>
+              <ng-container *ngIf="pixel.hadJewel">{{
+                pixel.jewelWeight
+              }}</ng-container>
+            </div>
+          </ng-container>
+        </ng-container>
+        <div class="ground-not-ready text-center" *ngIf="!isGroundReady">
+          <p>
+            Please setup the ground from the settings panel and hit apply button
+            to get started
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    app-jewel-summary
+    class="col-12"
+    [collectedJewels]="collectedJewels"
+    (toggleJewelDetailOnEvent)="toggleJewelDetail()"
+    *ngIf="!isJewelDetailOn && collectedJewels.length"
+  ></div>
+</div>
+
+<div class="row" *ngIf="isJewelDetailOn">
+  <div
+    app-jewels-list
+    class="col-12"
+    [collectedJewels]="collectedJewels"
+    (toggleJewelDetailOnEvent)="toggleJewelDetail()"
+  ></div>
+</div>
